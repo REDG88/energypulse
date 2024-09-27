@@ -13,16 +13,16 @@ def load_csv_from_s3(bucket_name, file_key):
     df = pd.read_csv(obj['Body'])
     return df
 
-# Function to invoke the Bedrock model
+# Function to invoke your Bedrock model
 def invoke_bedrock_model(prompt):
-    client = boto3.client('bedrock-runtime', region_name='us-east-1')  # Use bedrock-runtime, specify region
-    body = json.dumps({"inputText": prompt})  # JSON format for input
+    client = boto3.client('bedrock-runtime', region_name='us-east-1')
+    body = json.dumps({"inputText": prompt})
     response = client.invoke_model(
-        modelId='amazon.titan-text-premier-v1:0',  # Replace with your Bedrock model ID
+        modelId='your-bedrock-model-id',  # Replace with your Bedrock model ID
         contentType='application/json',
-        body=body  # Pass the JSON formatted body
+        body=body
     )
-    result = response['body'].read().decode('utf-8')  # Decode the response
+    result = json.loads(response['body'].read().decode('utf-8'))  # Decode and parse JSON response
     return result
 
 # Load your data (replace with your bucket and file name)
@@ -33,18 +33,15 @@ data_frame = load_csv_from_s3(bucket_name, file_key)
 # Home route to serve the frontend
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', data=data_frame.to_dict(orient='records'))
 
 # API endpoint for querying the agent
 @app.route('/query', methods=['POST'])
 def handle_query():
     user_query = request.json.get('query')
     query_type = request.json.get('type')
-
-    # Construct the prompt for the Bedrock model
+    
     prompt = f"{query_type}: {user_query}"
-
-    # Invoke the Bedrock model and return the result
     result = invoke_bedrock_model(prompt)
     return jsonify(result)
 
