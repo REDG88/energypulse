@@ -16,7 +16,7 @@ def load_csv_from_s3(bucket_name, file_key):
 def invoke_bedrock_model(prompt):
     client = boto3.client('bedrock')
     response = client.invoke_model(
-        ModelId='your-model-id',  # Replace with your Bedrock model ID
+        ModelId='amazon.titan-text-premier-v1:0',  # Replace with your Bedrock model ID
         Body={
             'input': prompt
         }
@@ -24,8 +24,8 @@ def invoke_bedrock_model(prompt):
     return response['output']
 
 # Load your data (replace with your bucket and file name)
-bucket_name = 'your-bucket-name'
-file_key = 'your-file.csv'
+bucket_name = 'energy-pulse-dataset'
+file_key = 'energy_sector_data.csv'
 data_frame = load_csv_from_s3(bucket_name, file_key)
 
 # Home route to serve the frontend
