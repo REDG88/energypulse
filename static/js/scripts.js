@@ -1,6 +1,6 @@
 document.getElementById('askButton').addEventListener('click', async function() {
     const userQuery = document.getElementById('userQuery').value;
-    const queryType = 'fault_detection'; // You can modify this based on your requirements
+    const queryType = 'fault_detection';  // Modify as needed
 
     const response = await fetch('/query', {
         method: 'POST',
@@ -14,34 +14,29 @@ document.getElementById('askButton').addEventListener('click', async function() 
     document.getElementById('response').innerText = JSON.stringify(data, null, 2);
 });
 
-// Function to render the chart
-function renderChart(data) {
-    const ctx = document.getElementById('faultMetricsChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: Object.keys(data),
-            datasets: [{
-                label: 'Fault Occurrences',
-                data: Object.values(data),
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
+// Function to render dynamic table
+function renderTable(data) {
+    const tableBody = document.getElementById('data-table-body');
+    tableBody.innerHTML = '';  // Clear existing content
+
+    data.forEach(row => {
+        const tr = document.createElement('tr');
+        Object.values(row).forEach(cellData => {
+            const td = document.createElement('td');
+            td.innerText = cellData;
+            tr.appendChild(td);
+        });
+        tableBody.appendChild(tr);
     });
 }
 
-// Call this function to initially load fault metrics when the page loads
+// Fetch the data when the page loads
 window.onload = async () => {
-    const response = await fetch('/metrics');  // You will implement this endpoint
+    const response = await fetch('/metrics');
     const metricsData = await response.json();
     renderChart(metricsData);
+
+    const tableResponse = await fetch('/');  // Fetch initial CSV data
+    const tableData = await tableResponse.json();
+    renderTable(tableData);
 };
