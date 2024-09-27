@@ -3,44 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EnergyPulse Dashboard</title>
+    <title>EnergyPulse AI Agent</title>
     <link rel="stylesheet" href="/static/css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/static/js/scripts.js" defer></script>
 </head>
 <body>
     <div class="container">
-        <h1>EnergyPulse Dashboard</h1>
-
-        <div class="query-section">
-            <h2>Ask the EnergyPulse AI Agent</h2>
-            <input type="text" id="userQuery" placeholder="Type your question here...">
-            <button id="askButton">Ask</button>
-            <div id="response"></div>
-        </div>
-
-        <div class="table-container">
-            <h2>Data Overview</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Equipment Type</th>
-                        <th>Sensor ID</th>
-                        <th>Location</th>
-                        <th>Timestamp</th>
-                        <th>Temperature</th>
-                        <th>Voltage</th>
-                        <th>Current</th>
-                        <th>Fault Type</th>
-                        <th>Root Cause</th>
-                        <th>Corrective Action</th>
-                        <th>Maintenance Status</th>
-                    </tr>
-                </thead>
-                <tbody id="data-table-body">
-                    <!-- Data will be dynamically rendered here -->
-                </tbody>
-            </table>
+        <h1>EnergyPulse AI Agent</h1>
+        <div class="flex-container">
+            <div class="response-section">
+                <h2>Response</h2>
+                <pre id="response" class="response-box"></pre>
+            </div>
+            <div class="query-section">
+                <h2>Ask the Agent</h2>
+                <input type="text" id="userQuery" placeholder="Type your question here...">
+                <button id="askButton">Ask</button>
+            </div>
         </div>
     </div>
 </body>
