@@ -1,6 +1,7 @@
 import boto3
 from flask import Flask, request, jsonify, render_template
 import pandas as pd
+import json
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -14,14 +15,15 @@ def load_csv_from_s3(bucket_name, file_key):
 
 # Function to invoke the Bedrock model
 def invoke_bedrock_model(prompt):
-    client = boto3.client('bedrock')
+    client = boto3.client('bedrock-runtime', region_name='us-east-1')  # Use bedrock-runtime, specify region
+    body = json.dumps({"inputText": prompt})  # JSON format for input
     response = client.invoke_model(
-        ModelId='amazon.titan-text-premier-v1:0',  # Replace with your Bedrock model ID
-        Body={
-            'input': prompt
-        }
+        modelId='amazon.titan-text-premier-v1:0',  # Replace with your Bedrock model ID
+        contentType='application/json',
+        body=body  # Pass the JSON formatted body
     )
-    return response['output']
+    result = response['body'].read().decode('utf-8')  # Decode the response
+    return result
 
 # Load your data (replace with your bucket and file name)
 bucket_name = 'energy-pulse-dataset'
@@ -54,4 +56,4 @@ def get_metrics():
 
 # Run the application
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80)
+    app.run(host='0.0.0.0', port=8098)
