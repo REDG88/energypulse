@@ -3,19 +3,22 @@ body {
     background-color: #f4f4f4;
     margin: 0;
     padding: 20px;
+    background-image: url('/images/412.jpg'); /* Adjust path based on your structure */
+    background-size: cover; /* Cover the whole background */
+    background-position: center; /* Center the image */
 }
 
 .container {
     max-width: 1200px;
     margin: auto;
     padding: 20px;
-    background: white;
+    background: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 h1, h2 {
-    color: #333;
+    color: #d9534f; /* A red tone matching the heartbeat theme */
 }
 
 .flex-container {
@@ -36,7 +39,7 @@ h1, h2 {
 }
 
 .response-box {
-    background-color: #f0f0f0;
+    background-color: #ffffff; /* White background for response */
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;
@@ -51,4 +54,13 @@ h1, h2 {
 
 #askButton {
     padding: 10px;
+    background-color: #d9534f; /* Button color matching the heartbeat theme */
+    color: white; /* Button text color */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners for button */
+    cursor: pointer; /* Pointer cursor on hover */
+}
+
+#askButton:hover {
+    background-color: #c9302c; /* Darker shade on hover */
 }
