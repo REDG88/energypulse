@@ -1,64 +1,54 @@
 body {
-    font-family: 'Helvetica Neue', sans-serif;
-    background-color: #1d1f21;
-    color: #ffffff;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
     margin: 0;
     padding: 20px;
 }
 
 .container {
-    max-width: 900px;
-    margin: 0 auto;
-    background-color: #2b2e33;
-    border-radius: 8px;
+    max-width: 1200px;
+    margin: auto;
     padding: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 h1, h2 {
-    color: #39a75b;  /* Energy-themed green */
+    color: #333;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.response-section {
+    width: 60%; /* Adjust width as necessary */
+    padding: 10px;
+    border-right: 2px solid #ccc; /* Optional border to separate */
+}
+
+.query-section {
+    width: 35%; /* Adjust width as necessary */
+    padding: 10px;
+}
+
+.response-box {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    max-height: 400px; /* Limit height for scrolling */
+    overflow-y: auto; /* Allow scrolling */
+}
+
+#userQuery {
+    width: calc(100% - 110px); /* Adjust based on button width */
+    padding: 10px;
 }
 
 #askButton {
-    background-color: #4a90e2; /* Slack-like blue */
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-#askButton:hover {
-    background-color: #357ab8;
-}
-
-input[type="text"] {
-    width: 75%;
     padding: 10px;
-    margin-right: 10px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-}
-
-.table-container {
-    margin-top: 30px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-table, th, td {
-    border: 1px solid #ccc;
-    padding: 10px;
-    text-align: left;
-}
-
-th {
-    background-color: #32363b;
-}
-
-td {
-    background-color: #282c34;
 }
