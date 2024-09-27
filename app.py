@@ -4,7 +4,7 @@ import pandas as pd
 import json
 
 # Initialize Flask app
-app = Flask(__name__)
+app = Flask(__name__, static_folder='/usr/share/nginx/html/myapp/energypulse/static')
 
 # Load the CSV file from S3
 def load_csv_from_s3(bucket_name, file_key):
@@ -18,7 +18,7 @@ def invoke_bedrock_model(prompt):
     client = boto3.client('bedrock-runtime', region_name='us-east-1')
     body = json.dumps({"inputText": prompt})
     response = client.invoke_model(
-        modelId='your-bedrock-model-id',  # Replace with your Bedrock model ID
+        modelId='amazon.titan-text-premier-v1:0',  # Replace with your Bedrock model ID
         contentType='application/json',
         body=body
     )
@@ -33,7 +33,7 @@ data_frame = load_csv_from_s3(bucket_name, file_key)
 # Home route to serve the frontend
 @app.route('/')
 def index():
-    return render_template('index.html', data=data_frame.to_dict(orient='records'))
+    return render_template('index.html')
 
 # API endpoint for querying the agent
 @app.route('/query', methods=['POST'])
@@ -44,12 +44,6 @@ def handle_query():
     prompt = f"{query_type}: {user_query}"
     result = invoke_bedrock_model(prompt)
     return jsonify(result)
-
-# API endpoint for metrics
-@app.route('/metrics', methods=['GET'])
-def get_metrics():
-    fault_counts = data_frame['Fault_Type'].value_counts().to_dict()
-    return jsonify(fault_counts)
 
 # Run the application
 if __name__ == '__main__':
